@@ -20,6 +20,8 @@ $(".btn").click(function() {
     playSound(userChosenColour);
 
     animatePress(userChosenColour);
+
+    checkAnswer(userClickedPattern.length-1);
 })
 
 function nextSequence()
@@ -64,4 +66,35 @@ document.addEventListener("keydown", function (event) {
     }
 })
 
+function checkAnswer(currentLevel)
+{
+    if (gamePattern[currentLevel] === userClickedPattern[currentLevel]) 
+    {
+        console.log("success");
 
+        if (userClickedPattern.length === gamePattern.length)
+        {
+            setTimeout(function() {
+                nextSequence();
+            }, 1000);
+        }
+    }
+    else
+    {
+        setTimeout(function() {
+            $("body").addClass("game-over");
+        }, 200);
+        $("h1")[0].innerHTML = "Game Over, Press any key to restart";
+        console.log("wrong");
+        startOver();
+    }
+    
+}
+
+function startOver()
+{
+    level = 0;
+    gamePattern = [];
+    keyPressCount = 0;
+    userClickedPattern = [];
+}
